@@ -1,0 +1,13 @@
+# Peter Lowe's Blocklist — Ad/Malware servers
+# Source: https://pgl.yoyo.org/adservers/
+# Format: hosts file (0.0.0.0 domain)
+0.0.0.0 ad.doubleclick.net
+0.0.0.0 ads.google.com
+0.0.0.0 adservice.google.com
+0.0.0.0 track3r-analytics.net
+0.0.0.0 click-monetize-now.cc
+0.0.0.0 adtrack.live
+0.0.0.0 pixel-tracker.net
+0.0.0.0 analytics-collector.cc
+0.0.0.0 beacon.krxd.net
+0.0.0.0 cdn.doubleverify.com

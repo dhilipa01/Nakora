@@ -1,0 +1,9 @@
+[
+  {"domain":"fast-flux-c2.biz",        "threat_type":"Malware C2",     "added":"2024-11-01"},
+  {"domain":"dns-tunnel-exfil.co",      "threat_type":"DNS Tunneling",  "added":"2024-11-15"},
+  {"domain":"cache-poison-ns1.net",     "threat_type":"Cache Poisoning","added":"2024-12-01"},
+  {"domain":"dga-c2-ab3kf72.xyz",       "threat_type":"DGA",            "added":"2025-01-10"},
+  {"domain":"secure-bankverify.xyz",    "threat_type":"Phishing",       "added":"2025-01-20"},
+  {"domain":"botnet-c2-server.cc",      "threat_type":"Malware C2",     "added":"2025-02-01"},
+  {"domain":"xmrpool.supportxmr.com",   "threat_type":"Cryptojacking",  "added":"2025-02-10"}
+]

@@ -1,0 +1,915 @@
+This error occurs because eslint-plugin-no-unsanitized (version 4.1.5) requires ESLint 9 or 10, but your project is currently using ESLint 8.57.1.
+
+Because npm 7 and above are very strict about "peer dependency" conflicts, it stops the installation to prevent potential bugs.
+
+Here are the three ways to fix this, ordered from easiest to most recommended:
+
+Option 1: The Quick Fix (Recommended for now)
+Run the install command with the --legacy-peer-deps flag. This tells npm to ignore the version conflict and install the packages anyway. Most ESLint plugins built for version 9 still work fine with version 8.
+
+Bash
+npm install --legacy-peer-deps
+Option 2: Pin the Plugin Version
+The reason this is happening is that your package.json likely has "eslint-plugin-no-unsanitized": "^4.0.2". The ^ symbol allowed npm to download version 4.1.5, which is the one that broke compatibility with ESLint 8.
+
+You can force it to stay on a version that supports ESLint 8 by removing the caret:
+
+Open your package.json.
+
+Find the line: "eslint-plugin-no-unsanitized": "^4.0.2"
+
+Change it to: "eslint-plugin-no-unsanitized": "4.0.2" (remove the ^).
+
+Run npm install.
+
+Option 3: Upgrade ESLint (The "Future-Proof" way)
+If you want to move your project to the latest standards, you can upgrade ESLint to version 9. Note: This might require you to update your .eslintrc configuration file to the new "Flat Config" format (eslint.config.mjs).
+
+Bash
+npm install eslint@latest --save-dev
+Summary for your "Phishing Detection Engine" Project:
+Since you are likely using this plugin to ensure your frontend (possibly a dashboard or a web-based part of your "Nakora" project) doesn't have XSS vulnerabilities, Option 1 is the fastest way to get back to coding without having to rewrite your linting configurations.after that, what next ?
+
+Once you have resolved the dependency conflict and successfully run npm install, your next steps should focus on verification and securing your project.
+
+Since this is a security-oriented project, you want to ensure that bypassing strict version checks hasn't introduced vulnerabilities or broken your linting rules.
+
+1. Verify the Installation
+Check if the packages are actually in your node_modules and that ESLint is responsive.
+
+PowerShell
+# Check if ESLint is working and see its version
+npx eslint --version
+
+# List installed plugins to confirm no-unsanitized is present
+npm list eslint-plugin-no-unsanitized
+2. Test the Security Linter
+Because the error specifically involved eslint-plugin-no-unsanitized (which prevents dangerous code like innerHTML), you should verify it’s actually catching issues.
+
+Create a temporary file (e.g., test-security.js).
+
+Add a "forbidden" line of code: document.body.innerHTML = location.search;
+
+Run the linter: npx eslint test-security.js
+
+Success: If it flags the innerHTML assignment as a security error, your "legacy" installation is working correctly.
+
+3. Run a Security Audit
+Since you used a flag to bypass dependency trees, it's good practice to check if any of the packages you just installed have known vulnerabilities.
+
+PowerShell
+npm audit
+If it finds high-severity issues, run npm audit fix.
+
+4. Update your Project Documentation
+If you are working in a team or planning to use this for a hackathon/submission, document this step.
+
+Add a note in your README.md or a CONTRIBUTING.md file:
+
+"Note: Due to peer dependency conflicts between ESLint 8 and the security plugins, please use npm install --legacy-peer-deps for the initial setup."
+
+5. (Optional) Lock the Configuration
+If you chose Option 2 (pinning the version in package.json), make sure you delete your package-lock.json and run a fresh npm install to ensure the "clean" version of the tree is saved. This prevents the error from popping up again for other developers.
+
+What's next for the code?
+Once the environment is stable, you can proceed with:
+
+Feature Development: Implementing the URLAnalyzer or the MLInferenceEngine as defined in your UML diagrams.
+
+UI Work: Building out the WinUI 3 dashboard for "Nakora" to display the phishing alerts.
+
+ start
+
+    electron .
+
+available via `npm run-script`:
+
+  dev
+
+    concurrently "vite" "wait-on http://localhost:5173 && NODE_ENV=development electron ."
+
+  build
+
+    node scripts/build.js && vite build && node scripts/validate-csp.js
+
+  dist
+
+    npm run build && electron-builder
+
+  lint
+
+    eslint src --ext .js,.jsx --max-warnings 0
+
+  rebuild
+
+    electron-rebuild -f -w better-sqlite3
+
+PS C:\Users\chinm\Downloads\sana_2> npm run dev
+
+Unknown command: "rundev"
+
+> nakora@0.1.0 dev
+
+> concurrently "vite" "wait-on http://localhost:5173 && NODE_ENV=development electron ."
+
+  npm help
+
+[0] The CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.
+
+[0]
+
+[0]   VITE v5.4.21  ready in 766 ms
+
+[0]
+
+[0]   ➜  Local:   http://localhost:5173/
+
+[0]   ➜  Network: use --host to expose
+
+[1] 'NODE_ENV' is not recognized as an internal or external command,
+
+[1] operable program or batch file.
+
+[0] Error:   Failed to scan for dependencies from entries:
+
+[0]   C:/Users/chinm/Downloads/sana_2/src/renderer/index.html
+
+[0]
+
+[0]   X [ERROR] The JSX syntax extension is not currently enabled
+
+[0]
+
+[0]     src/renderer/context/AppState.context.js:31:4:
+
+[0]       31 │     <AppStateCtx.Provider value={{
+
+[0]          ╵     ^
+
+[0]
+
+[0]   The esbuild loader for this file is currently set to "js" but it must be set to "jsx" to be able to parse JSX syntax. You can use "loader: { '.js': 'jsx' }" to do that.
+
+[0]
+
+[0]
+
+[0]     at failureErrorWithLog (C:\Users\chinm\Downloads\sana_2\node_modules\esbuild\lib\main.js:1472:15)
+
+[0]     at C:\Users\chinm\Downloads\sana_2\node_modules\esbuild\lib\main.js:945:25
+
+[0]     at runOnEndCallbacks (C:\Users\chinm\Downloads\sana_2\node_modules\esbuild\lib\main.js:1315:45)
+
+[0]     at buildResponseToResult (C:\Users\chinm\Downloads\sana_2\node_modules\esbuild\lib\main.js:943:7)
+
+[0]     at C:\Users\chinm\Downloads\sana_2\node_modules\esbuild\lib\main.js:955:9
+
+[0]     at new Promise (<anonymous>)
+
+[0]     at requestCallbacks.on-end (C:\Users\chinm\Downloads\sana_2\node_modules\esbuild\lib\main.js:954:54)
+
+[0]     at handleRequest (C:\Users\chinm\Downloads\sana_2\node_modules\esbuild\lib\main.js:647:17)
+
+[0]     at handleIncomingPacket (C:\Users\chinm\Downloads\sana_2\node_modules\esbuild\lib\main.js:672:7)
+
+[0]     at Socket.readFromStdout (C:\Users\chinm\Downloads\sana_2\node_modules\esbuild\lib\main.js:600:7)
+
+[0] 4:18:07 AM [vite] Pre-transform error: Failed to parse source for import analysis because the content contains invalid JS syntax. If you are using JSX, make sure to name the file with the .jsx or .tsx extension.
+
+[0] 4:18:08 AM [vite] Pre-transform error: Failed to parse source for import analysis because the content contains invalid JS syntax. If you are using JSX, make sure to name the file with the .jsx or .tsx extension.
+
+[0] 4:18:08 AM [vite] Pre-transform error: Failed to parse source for import analysis because the content contains invalid JS syntax. If you are using JSX, make sure to name the file with the .jsx or .tsx extension.
+
+[0] 4:18:08 AM [vite] Pre-transform error: Failed to parse source for import analysis because the content contains invalid JS syntax. If you are using JSX, make sure to name the file with the .jsx or .tsx extension.
+
+[0] 4:18:08 AM [vite] Pre-transform error: Failed to parse source for import analysis because the content contains invalid JS syntax. If you are using JSX, make sure to name the file with the .jsx or .tsx extension.
+
+[0] 4:18:08 AM [vite] Pre-transform error: Failed to parse source for import analysis because the content contains invalid JS syntax. If you are using JSX, make sure to name the file with the .jsx or .tsx extension.
+
+[0] 4:18:08 AM [vite] Pre-transform error: Failed to parse source for import analysis because the content contains invalid JS syntax. If you are using JSX, make sure to name the file with the .jsx or .tsx extension.
+
+[0] 4:18:08 AM [vite] Pre-transform error: Failed to parse source for import analysis because the content contains invalid JS syntax. If you are using JSX, make sure to name the file with the .jsx or .tsx extension.
+
+[1] wait-on http://localhost:5173 && NODE_ENV=development electron . exited with code 1
+
+It looks like you've run into two common issues when developing Electron apps on Windows with Vite. You have a system environment variable error and a Vite configuration error.
+
+Here is how to fix them:
+
+1. Fix the NODE_ENV Error (Windows Compatibility)
+The error 'NODE_ENV' is not recognized happens because Windows PowerShell/Command Prompt doesn't support setting environment variables inline like Linux/macOS does.
+
+The Fix:
+Install cross-env to handle environment variables across all operating systems.
+
+PowerShell
+npm install --save-dev cross-env
+Then, update your package.json scripts:
+
+JSON
+"dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\""
+2. Fix the JSX Syntax Error (Vite Config)
+Vite (via esbuild) is trying to parse your .js files as plain JavaScript, but they contain JSX (like <AppStateCtx.Provider ... />).
+
+The Fix (Two Options):
+
+Option A (Recommended): Rename src/renderer/context/AppState.context.js to AppState.context.jsx. Vite automatically handles .jsx files correctly.
+
+Option B (Configure Vite): If you want to keep the .js extension, you must tell Vite to treat .js files as JSX. Update your vite.config.js file:
+
+JavaScript
+// vite.config.js
+export default {
+  // ... other config
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
+      },
+    },
+  },
+  esbuild: {
+    loader: 'jsx',
+    include: /src\/.*\.js$/, // Apply to all .js files in src
+    exclude: [],
+  },
+}
+3. Summary of Steps
+Install cross-env: npm install --save-dev cross-env
+
+Update package.json: Change NODE_ENV=development to cross-env NODE_ENV=development.
+
+Rename Files: Rename your files containing HTML-like code from .js to .jsx.
+
+Run again: npm run dev
+
+Pro-tip for "Nakora": Since this is a phishing detection engine, once you get the UI running, ensure your AppState.context is properly isolated from the main process logic to keep the "Zero-Trust" architecture you planned in your UML diagrams!
+
+look look, I want to redo this entire thing; everythting's broken. I want to go back to the intial problem and go for the tempriary fix
+
+I understand. When things get this tangled, the best move is to "nuke" the environment and restart with a clean slate using the most compatible Windows setup.
+
+Here is your "Reset & Temporary Fix" plan to get the Nakora project running:
+
+1. The "Clean Slate" Reset
+Run these commands in your project folder to remove all the broken metadata and half-installed packages:
+
+PowerShell
+# Remove the folder containing all packages
+Remove-Item -Recurse -Force node_modules
+
+# Remove the lock file which might contain the wrong dependency tree
+Remove-Item -Force package-lock.json
+
+# Clear the npm cache to ensure fresh downloads
+npm cache clean --force
+2. The Fresh Install (The Temporary Fix)
+Now, perform a fresh install. We will use the --legacy-peer-deps flag to bypass the ESLint conflict immediately.
+
+PowerShell
+npm install --legacy-peer-deps
+3. Fix the "NODE_ENV" Command (Windows Fix)
+As you saw in your logs, Windows doesn't know what NODE_ENV=development means. To fix this "permanently" without changing your OS, install cross-env:
+
+PowerShell
+npm install --save-dev cross-env
+Now, go into your package.json and find the "dev" script. Change it to this:
+
+JSON
+"dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\""
+(Just add cross-env right before NODE_ENV).
+
+4. The JSX "Quick Hack"
+Since you don't want to rename every file right now, we can tell Vite to treat all .js files as React JSX files.
+
+Open vite.config.js and add the esbuild section:
+
+JavaScript
+export default {
+  // ... your existing config
+  esbuild: {
+    loader: 'jsx',
+    include: /src\/.*\.js$/, // This tells Vite: "Every .js file in src is actually JSX"
+    exclude: [],
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
+      },
+    },
+  },
+}
+5. Final Launch
+Now that the environment variables are cross-platform and the loader is set to handle your syntax, try running the dev server again:
+
+PowerShell
+npm run dev
+Why this works:
+--legacy-peer-deps: Ignores the fact that your security plugin wants a newer ESLint.
+
+cross-env: Bridges the gap between Linux-style commands and Windows.
+
+esbuild loader: Stops Vite from panicking when it sees <Tags /> inside a .js file.
+
+How does the terminal react after you apply the cross-env fix?
+
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+
+npm warn deprecated @npmcli/move-file@2.0.1: This functionality has been moved to @npmcli/fs
+
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+
+npm warn deprecated boolean@3.2.0: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+
+npm warn deprecated glob@8.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+npm warn deprecated tar@6.2.1: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+
+
+added 494 packages, and audited 495 packages in 2m
+
+
+
+95 packages are looking for funding
+
+  run `npm fund` for details
+
+
+
+15 vulnerabilities (4 low, 2 moderate, 9 high)
+
+
+
+To address issues that do not require attention, run:
+
+  npm audit fix
+
+
+
+To address all issues (including breaking changes), run:
+
+  npm audit fix --force
+
+
+
+Run `npm audit` for details. This after running legacy peer deps
+
+This is exactly what we wanted to see! Those warnings about "deprecated" packages and "vulnerabilities" are normal when dealing with Electron and older versions of ESLint—they won't stop the app from running.
+
+The key line is: added 494 packages. This means your node_modules is now correctly populated.
+
+To get the app actually visible on your screen, we just need to bypass those Windows-specific and Syntax errors from before. Do these three things in order:
+
+1. The Windows "Bridge"
+Run this command to install the tool that lets the NODE_ENV command work on your Windows machine:
+
+PowerShell
+npm install --save-dev cross-env
+2. The Script Fix
+Open your package.json file. Look for the "scripts" section and find the "dev" line. Change it to this:
+
+JSON
+"dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\""
+(All we did was add cross-env in front of the command that failed earlier).
+
+3. The "Ignore Syntax" Hack
+Since Vite is complaining about <JSX /> tags in your .js files, open your vite.config.js and make sure it looks like this:
+
+JavaScript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  esbuild: {
+    loader: 'jsx',
+    include: /src\/.*\.js$/, // Forces Vite to read .js files as JSX
+    exclude: [],
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
+      },
+    },
+  }
+})
+Now, try the "Big Moment":
+Run the project again:
+
+PowerShell
+npm run dev
+What to expect:
+
+A terminal window showing Vite is ready at localhost:5173.
+
+A short pause (thanks to wait-on).
+
+A native Electron window (the Nakora App) should pop up on your taskbar.
+
+If it still throws a "JSX" error, it means we might need to look at your vite.config.js specifically—but usually, the esbuild loader hack is the silver bullet for this. How does it look?
+
+the actual app (not the web ui) is not loading
+
+Right, if the Electron window itself isn't popping up, it's almost certainly because that second command in your concurrently string (the one that starts the Electron process) is failing before it can even draw a window.
+
+Let's look at the "Nakora" logs you shared:
+
+[1] 'NODE_ENV' is not recognized as an internal or external command
+
+This killed the Electron process instantly. To get the actual desktop app to load on Windows, we need to fix the bridge between your code and the OS.
+
+1. Fix the package.json (The "Windows" Fix)
+Open your package.json file. You need to change the dev script to use cross-env.
+
+Change this:
+"dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && NODE_ENV=development electron .\""
+
+To this:
+"dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && npx cross-env NODE_ENV=development electron .\""
+
+(Adding npx cross-env ensures Windows knows how to handle that environment variable).
+
+2. Check the "Entry Point"
+If the script is fixed but it still won't load, Electron might be looking for the wrong "Main" file.
+
+In your package.json, look for the "main": field.
+
+Make sure it points to the correct file (likely src/main/main.js or index.js).
+
+If that file is missing or has a typo, the app will never start.
+
+3. Run Electron Separately (The Debug Trick)
+To see the real error without Vite or concurrently getting in the way, try running Electron directly in a second terminal window:
+
+Terminal 1: Run npm run vite (or whatever starts your frontend).
+
+Terminal 2: Once the website is live at localhost:5173, type:
+
+PowerShell
+npx cross-env NODE_ENV=development electron .
+What happens when you run that specific command? * If it opens: The problem was just the concurrently script timing.
+
+If it crashes: It will give us a stack trace (e.g., "Cannot find module" or "Syntax error at main.js").
+
+Since you're building a system-wide DNS tool (as per your UML), the "Main" process is the brain—if it has a single syntax error in its initialization, it will silently exit. Copy-paste any error you see in Terminal 2 here!
+
+wait nvm all this, I currently have a package-lock.json sitting on my folder. what do I do
+
+If your project is completely "broken" and you want a fresh start, that package-lock.json might actually be holding onto the exact "broken" state you're trying to escape.
+
+Here is the most effective way to handle it:
+
+1. Delete it (The "Clean Start" approach)
+If you want to truly redo the installation and use the temporary fix (--legacy-peer-deps), delete the lockfile. Keeping it tells npm to try and recreate the exact (currently broken) dependency tree.
+
+Run these in order:
+
+PowerShell
+# 1. Delete the lockfile and the half-broken packages
+Remove-Item -Force package-lock.json
+Remove-Item -Recurse -Force node_modules
+
+# 2. Re-install using the 'Temporary Fix'
+npm install --legacy-peer-deps
+2. Why this is the move right now:
+Fresh Resolution: Deleting the lockfile forces npm to look at your package.json with fresh eyes. It will calculate a new tree based on the versions listed there.
+
+Bypassing the "Hell": Since you’re dealing with a version conflict (ESLint 8 vs 9), a new lockfile generated with --legacy-peer-deps will formally record that "hey, we're ignoring this peer dependency conflict" so you don't have to fight it every single time you add a package.
+
+3. What to do after it installs:
+Once npm install finishes and your terminal is clear, a new package-lock.json will be created.
+
+Keep this one. It represents your new "working" state.
+
+Immediately try the cross-env fix for your Electron window:
+
+PowerShell
+npm install --save-dev cross-env
+Summary: Kill the old lockfile. It's a ghost of the broken setup. Start fresh, let npm build a new one, and then we can focus on getting that Electron window to pop up.
+
+PS C:\Users\chinm\Downloads\sana_2> Remove-Item -Recurse -Force node_modules
+
+npm warn skipping integrity check for git dependency ssh://git@github.com/electron/node-gyp.git
+
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+
+npm warn deprecated @npmcli/move-file@2.0.1: This functionality has been moved to @npmcli/fs
+
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+
+npm warn deprecated glob@8.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+
+npm warn deprecated boolean@3.2.0: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+npm warn deprecated tar@6.2.1: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+
+
+added 496 packages, and audited 497 packages in 2m
+
+
+
+95 packages are looking for funding
+
+  run `npm fund` for details
+
+
+
+15 vulnerabilities (4 low, 2 moderate, 9 high)
+
+
+
+To address issues that do not require attention, run:
+
+  npm audit fix
+
+
+
+To address all issues (including breaking changes), run:
+
+  npm audit fix --force
+
+
+
+Run `npm audit` for details.
+
+PS C:\Users\chinm\Downloads\sana_2> npm install --save-dev cross-env
+
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+
+
+added 31 packages, and audited 528 packages in 11s
+
+
+
+95 packages are looking for funding
+
+  run `npm fund` for details
+
+
+
+16 vulnerabilities (4 low, 2 moderate, 10 high)
+
+
+
+To address issues that do not require attention, run:
+
+  npm audit fix
+
+
+
+To address all issues (including breaking changes), run:
+
+  npm audit fix --force
+
+
+
+Run `npm audit` for details.
+
+PS C:\Users\chinm\Downloads\sana_2> npm run
+
+Lifecycle scripts included in nakora@0.1.0:
+
+  start
+
+    electron .
+
+available via `npm run-script`:
+
+  dev
+
+    concurrently "vite" "wait-on http://localhost:5173 && cross-env NODE_ENV=development electron ."
+
+  build
+
+    node scripts/build.js && vite build && node scripts/validate-csp.js
+
+  dist
+
+    npm run build && electron-builder
+
+  lint
+
+    eslint src --ext .js,.jsx --max-warnings 0
+
+  rebuild
+
+    electron-rebuild -f -w better-sqlite3
+
+PS C:\Users\chinm\Downloads\sana_2> npm run dev
+
+
+
+> nakora@0.1.0 dev
+
+> concurrently "vite" "wait-on http://localhost:5173 && cross-env NODE_ENV=development electron ."
+
+
+
+[0] The CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.
+
+[0]
+
+[0]   VITE v5.4.21  ready in 732 ms
+
+[0]
+
+[0]   ➜  Local:   http://localhost:5173/
+
+[0]   ➜  Network: use --host to expose
+
+It looks like the cross-env fix worked perfectly because Terminal [1] (the Electron process) didn't crash immediately with the "not recognized" error!
+
+However, your logs stopped at [0] (Vite). This is because wait-on is literally waiting for the local website to be fully ready before it kicks off the actual Electron window. Since you previously had JSX errors in your code, the website might be "up" but failing to compile, which keeps Electron from launching.
+
+Check your terminal again. If it is stuck and nothing is happening, you likely have the same "The JSX syntax extension is not currently enabled" error from before.
+
+Step 1: The "Vite Syntax" Fix
+Vite is trying to read your .js files as plain Javascript, but your code has React tags (JSX) in it.
+
+Open vite.config.js in your editor and make sure it looks like this. This tells Vite to treat .js files as JSX files:
+
+JavaScript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  esbuild: {
+    loader: 'jsx',
+    include: /src\/.*\.js$/, // This is the magic line
+    exclude: [],
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
+      },
+    },
+  },
+})
+Step 2: Check for Hidden Errors
+If you've updated the config and the Electron window still doesn't pop up:
+
+Open your browser to http://localhost:5173/.
+
+If the page is blank or shows an error message, that is what is blocking Electron.
+
+Any error you see in the browser console or the terminal under [0] is what we need to squash next.
+
+Step 3: Manual Test (The bypass)
+If you want to see if the Electron window works at all, open a second terminal window, navigate to your folder, and run:
+
+PowerShell
+npx cross-env NODE_ENV=development electron .
+If the app window opens this way, then the code is fine and we just need to tweak the wait-on timing!
+
+How is the terminal looking now? Did any [0] [ERROR] lines appear after Vite finished starting?
+
+S C:\Users\chinm\Downloads\sana_2> npm run
+
+Lifecycle scripts included in nakora@0.1.0:
+
+  start
+
+    electron .
+
+available via `npm run-script`:
+
+  dev
+
+    concurrently "vite" "wait-on http://localhost:5173 && cross-env NODE_ENV=development electron ."
+
+  build
+
+    node scripts/build.js && vite build && node scripts/validate-csp.js
+
+  dist
+
+    npm run build && electron-builder
+
+  lint
+
+    eslint src --ext .js,.jsx --max-warnings 0
+
+  rebuild
+
+    electron-rebuild -f -w better-sqlite3
+
+PS C:\Users\chinm\Downloads\sana_2> npm run dev
+
+
+
+> nakora@0.1.0 dev
+
+> concurrently "vite" "wait-on http://localhost:5173 && cross-env NODE_ENV=development electron ."
+
+
+
+[0] The CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.
+
+[0]
+
+[0]   VITE v5.4.21  ready in 732 ms
+
+[0]
+
+[0]   ➜  Local:   http://localhost:5173/
+
+[0]   ➜  Network: use --host to expose
+
+
+
+(node:1084) UnhandledPromiseRejectionWarning: Error: The module '\\?\C:\Users\chinm\Downloads\sana_2\node_modules\better-sqlite3\build\Release\better_sqlite3.node'
+
+was compiled against a different Node.js version using
+
+NODE_MODULE_VERSION 115. This version of Node.js requires3221225786
+
+NODE_MODULE_VERSION 121. Please try re-compiling or re-installingnt electron . exited with code 3221225786
+
+the module (for instance, using `npm rebuild` or `npm install`).
+
+    at process.func [as dlopen] (node:electron/js2c/node_init:2:2214)t electron .
+
+    at Module._extensions..node (node:internal/modules/cjs/loader:1343:18)
+
+    at Object.func [as .node] (node:electron/js2c/node_init:2:2214)
+
+    at Module.load (node:internal/modules/cjs/loader:1098:32)
+
+    at Module._load (node:internal/modules/cjs/loader:945:12)
+
+    at c._load (node:electron/js2c/node_init:2:13672)
+
+    at Module.require (node:internal/modules/cjs/loader:1122:19)
+
+    at require (node:internal/modules/helpers:130:18)
+
+    at bindings (C:\Users\chinm\Downloads\sana_2\node_modules\bindings\bindings.js:112:48)
+
+    at new Database (C:\Users\chinm\Downloads\sana_2\node_modules\better-sqlite3\lib\database.js:48:64)
+
+(Use `electron --trace-warnings ...` to show where the warning was created)
+
+(node:1084) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 2)
+
+We have a classic Electron "Native Module" conflict.
+
+The error NODE_MODULE_VERSION 115 vs 121 means your better-sqlite3 database was compiled for your local version of Node.js, but Electron uses its own internal version of Node.js, and they don't match.
+
+Since your project relies on better-sqlite3 (the Local SQLite DB from your UML diagram), we need to rebuild it specifically for Electron's version of Node.
+
+The Fix: Rebuild for Electron
+Run this command in your terminal. It uses electron-rebuild (which is already in your scripts) to force the database module to match Electron:
+
+PowerShell
+npm run rebuild
+If that command fails or you get a "not found" error, run this manual version:
+
+PowerShell
+npx electron-rebuild -f -w better-sqlite3
+What to do if it still fails:
+If the rebuild fails with a "missing C++ compiler" or "Python" error, it's because Windows needs build tools to compile sqlite. In that case, use this shortcut to get a pre-compiled version:
+
+Uninstall the current version:
+
+PowerShell
+npm uninstall better-sqlite3
+Re-install it:
+
+PowerShell
+npm install better-sqlite3 --legacy-peer-deps
+Run the rebuild again:
+
+PowerShell
+npm run rebuild
+Why this happened:
+Native modules like better-sqlite3 contain C++ code. Every time you update Electron or Node, the "bridge" between the C++ and Javascript changes (that's the NODE_MODULE_VERSION). Electron is almost always a few versions ahead of the standard Node.js release.
+
+Try npm run rebuild now, and then try npm run dev again. The window should finally pop up!
+
+nope still getting an error 404
+
+The 404 error inside your Electron window usually means one thing: the frontend (Vite) is running, but Electron is looking for a specific file or path that doesn't exist yet, or it's trying to load localhost:5173 before Vite has actually finished compiling the code.
+
+However, based on your previous logs, the 3221225786 error code is the real culprit—that is the Windows code for an Access Violation/Crash. Your Electron "Main" process is crashing because of the better-sqlite3 mismatch we discussed.
+
+To get past the 404 and the crash, follow these three steps exactly:
+
+1. Force-Rebuild the Database
+Since the automatic rebuild seems to be failing to link the versions, use the electron-builder utility which is often more reliable on Windows:
+
+PowerShell
+# This is the most robust way to fix the "Module version 115 vs 121" error
+npx electron-builder install-app-deps
+2. Verify Vite is actually "Serving"
+Open your browser (Chrome/Edge) and go to http://localhost:5173.
+
+If the browser shows a 404: The problem is your index.html location. Ensure index.html is in the root of your project or correctly configured in vite.config.js.
+
+If the browser shows your app: The problem is that Electron is trying to load the page too fast.
+
+3. Update the Electron "Main" Load Logic
+If Electron starts but shows a 404, it might be trying to load a file path instead of the URL. Open your Main process file (usually src/main/index.js or main.js) and find the mainWindow.loadURL line. It should look like this for development:
+
+JavaScript
+if (process.env.NODE_ENV === 'development') {
+  mainWindow.loadURL('http://localhost:5173')
+} else {
+  mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'))
+}
+4. The "Nuclear" Fix for SQLite (If 1 & 2 fail)
+If better-sqlite3 continues to crash the app (Error 3221225786), the fastest "temporary fix" to see your UI is to comment out the database briefly:
+
+Find where you require('better-sqlite3').
+
+Comment out those lines and the database initialization.
+
+Run npm run dev.
+
+If the app opens now, we know for 100% certainty that the entire problem is just the SQLite compilation, and your UI/Vite setup is healthy.
+
+Did the install-app-deps command finish without errors, or did it give you another version mismatch?
+
+There exists no....mainWindow.loadFile line.... in src/main/index.js
+
+If you don't see mainWindow.loadURL or mainWindow.loadFile, it's because you are likely using the electron-vite boilerplate. In this setup, the load logic is often abstracted away into a helper function or uses specific environment variables.
+
+The 404 error happens because Electron is looking for your web files before Vite has finished preparing them, or it's looking in the wrong folder.
+
+1. Where to find the "Load" logic
+Open src/main/index.js and look for a function called createWindow(). Inside that function, look for something that resembles this:
+
+JavaScript
+// In electron-vite boilerplates, it usually looks like this:
+if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+  mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+} else {
+  mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+}
+2. The "404" Fix (Vite Configuration)
+If you see a 404 inside the Electron window, it means ELECTRON_RENDERER_URL is pointing to http://localhost:5173, but Vite isn't serving the right file there.
+
+Fix your electron.vite.config.js (or .ts):
+Ensure your renderer root is correctly pointing to the folder containing your index.html. It should look like this:
+
+JavaScript
+// electron.vite.config.js
+import { resolve } from 'path'
+import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  main: {
+    plugins: [externalizeDepsPlugin()]
+  },
+  preload: {
+    plugins: [externalizeDepsPlugin()]
+  },
+  renderer: {
+    root: '.', // Check if this matches where your index.html is
+    plugins: [react()]
+  }
+})
+3. The "Race Condition" Fix
+Sometimes Electron tries to load the URL before Vite is "Ready".
+
+Close all terminals.
+
+Run npm run dev.
+
+Wait until the terminal explicitly says [0] VITE v5.4.21 ready.
+
+If the Electron window is still white or 404, press Ctrl + R inside the Electron window to force a reload.
+
+4. If you still have the better-sqlite3 crash
+The 404 might be a "fake" error caused by the main process crashing halfway through. If the app keeps closing itself, go back to the terminal and run:
+
+PowerShell
+npx electron-rebuild -f -w better-sqlite3
+This is mandatory. If the database isn't compiled for Electron, the main process will die, and the renderer (the window) will have nothing to connect to, resulting in a 404 or a crash.
+
+Check your src/renderer folder: Is there an index.html file directly inside it? If it's moved or renamed, that is your 404 source.

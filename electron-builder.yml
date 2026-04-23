@@ -1,0 +1,39 @@
+appId: dev.nakora.prototype
+productName: nakora
+copyright: "nakora prototype — DNS Security Shield"
+
+asar: true
+asarUnpack:
+  - "**/better-sqlite3/**"
+  - "**/keytar/**"
+
+directories:
+  output: dist-electron
+  buildResources: assets
+
+files:
+  - src/main/**
+  - src/preload/**
+  - dist/**
+  - data/**
+  - "!data/filter-lists/README.md"
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  icon: assets/icons/icon.ico
+  requestedExecutionLevel: asInvoker
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  installerIcon: assets/icons/icon.ico
+  uninstallerIcon: assets/icons/icon.ico
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: nakora
+
+publish: null

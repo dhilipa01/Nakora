@@ -1,0 +1,116 @@
+/* ── tokens.css ─────────────────────────────────────────────── */
+:root {
+  --green-bright:  #00ff41;
+  --green-mid:     #00cc33;
+  --green-dim:     #4a8a4a;
+  --green-border:  #1a3a1a;
+  --green-border-b:#2a6a2a;
+  --green-surface: #0e160e;
+  --black-base:    #060a06;
+  --black-surface: #0b110b;
+  --black-card:    #0e160e;
+  --red-alert:     #ff3333;
+  --red-dim:       #ff333318;
+  --amber-warn:    #ffaa00;
+  --amber-dim:     #ffaa0018;
+  --blue-info:     #00aaff;
+  --blue-dim:      #00aaff18;
+  --text-bright:   #c8e8c8;
+  --text-mid:      #4a8a4a;
+  --text-dim:      #1a4a1a;
+
+  --font-mono: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+  --font-sans: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+
+  --sidebar-width-expanded:  168px;
+  --sidebar-width-collapsed: 44px;
+  --header-height:           34px;
+  --statusbar-height:        24px;
+  --content-padding:         14px;
+
+  /* darker theme overrides via .theme-darker */
+  /* hacker theme overrides via .theme-hacker */
+}
+
+.theme-darker {
+  --green-bright: #00cc33; --green-mid: #00aa28; --green-dim: #306030;
+  --green-border: #122012; --green-border-b: #1a401a;
+  --black-base:   #020402; --black-surface: #060a06; --black-card: #080c08;
+  --text-bright:  #90c090; --text-mid: #306030; --text-dim: #102010;
+  --red-alert: #cc2222; --amber-warn: #cc8800; --blue-info: #0088cc;
+}
+
+.theme-hacker {
+  --green-bright: #80ff80; --green-mid: #00ff41; --green-dim: #007718;
+  --green-border: #0a2a0a; --green-border-b: #154015;
+  --black-base:   #000000; --black-surface: #010501; --black-card: #020802;
+  --text-bright:  #00ee30; --text-mid: #007718; --text-dim: #003308;
+  --red-alert: #ff0000; --amber-warn: #ffff00; --blue-info: #00ffff;
+}
+
+/* ── reset.css ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { height: 100%; overflow: hidden; }
+body { background: var(--black-base); color: var(--text-bright); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--black-base); }
+::-webkit-scrollbar-thumb { background: var(--green-border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--green-dim); }
+button, input, select { font-family: inherit; }
+button { cursor: pointer; }
+a { color: var(--green-mid); }
+
+/* ── layout.css ─────────────────────────────────────────────── */
+.app-shell {
+  display: grid;
+  grid-template-areas: "header header" "sidebar main" "statusbar statusbar";
+  grid-template-rows: var(--header-height) 1fr var(--statusbar-height);
+  grid-template-columns: var(--sidebar-width) 1fr;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+.app-shell.sidebar-collapsed { --sidebar-width: var(--sidebar-width-collapsed); }
+.app-shell:not(.sidebar-collapsed) { --sidebar-width: var(--sidebar-width-expanded); }
+
+.app-header  { grid-area: header;    z-index: 100; }
+.app-sidebar { grid-area: sidebar;   overflow: hidden; }
+.app-main    { grid-area: main;      overflow: hidden; display: flex; flex-direction: column; }
+.app-statusbar { grid-area: statusbar; }
+
+.page-container { flex: 1; overflow: hidden; padding: var(--content-padding); display: flex; gap: 10px; }
+.page-inner     { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 10px; }
+
+/* ── matrix.css ─────────────────────────────────────────────── */
+@keyframes blink    { 0%,100%{opacity:1} 49%{opacity:1} 50%{opacity:0} 99%{opacity:0} }
+@keyframes pulse    { 0%,100%{opacity:1} 50%{opacity:.3} }
+@keyframes fadein   { from{opacity:0;transform:translateY(-3px)} to{opacity:1;transform:translateY(0)} }
+@keyframes scanline { 0%{background-position:0 0} 100%{background-position:0 100%} }
+
+input[type="text"], input[type="password"] {
+  background: var(--black-surface); border: 1px solid var(--green-border);
+  color: var(--text-bright); border-radius: 3px; padding: 6px 10px;
+  font-family: var(--font-mono); font-size: 12px; outline: none;
+  transition: border-color 0.15s;
+}
+input[type="text"]:focus, input[type="password"]:focus { border-color: var(--green-mid); }
+input::placeholder { color: var(--text-dim); }
+
+select {
+  background: var(--black-surface); border: 1px solid var(--green-border);
+  color: var(--text-bright); border-radius: 3px; padding: 5px 8px;
+  font-family: var(--font-mono); font-size: 11px; outline: none;
+}
+select option { background: var(--black-surface); color: var(--text-bright); }
+
+input[type="range"] { accent-color: var(--green-mid); cursor: pointer; }
+
+.mono { font-family: var(--font-mono); }
+.focus-ring:focus { outline: 1px solid var(--green-bright); outline-offset: 2px; }
+
+/* Scanlines overlay for hacker theme */
+.scanlines::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
+}

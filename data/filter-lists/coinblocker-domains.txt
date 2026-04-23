@@ -1,0 +1,49 @@
+# CoinBlockerLists — Known Cryptomining Pool Domains
+# Source: https://zerodot1.gitlab.io/CoinBlockerLists/
+# Format: one domain per line
+# Prototype snapshot — production app fetches weekly
+
+pool.supportxmr.com
+xmrpool.eu
+minexmr.com
+nanopool.org
+f2pool.com
+antpool.com
+btc.com
+viabtc.com
+slushpool.com
+poolin.com
+coinhive.com
+crypto-loot.com
+coin-hive.com
+authedmine.com
+minr.pw
+jsecoin.com
+coinblind.com
+webminepool.com
+miner.pr0gramm.com
+2giga.link
+cpool.net
+mine.moneropool.com
+us-east.luxor.tech
+pool.minexmr.com
+xmrig.com
+randomx.org
+moneroocean.stream
+supportxmr.com
+hashvault.pro
+hero.hashvault.pro
+p2pool.io
+miningpoolhub.com
+ethermine.org
+2miners.com
+hiveon.net
+flexpool.io
+woolypooly.com
+ezil.me
+crazypool.org
+solopool.org
+herominers.com
+mining4.co
+xmrnodes.com
+monero.hashvault.pro

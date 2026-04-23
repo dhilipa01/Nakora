@@ -1,0 +1,19 @@
+# OpenPhish Feed — Static Prototype Snapshot
+# Source: https://openphish.com/
+# Format: one URL per line
+
+https://paypa1-secure-login.ru/login
+https://login-secure-hsbc.top/auth/verify
+https://secure-bankverify.xyz/account/verify
+https://xn--googl-fsa.com/login
+https://wellsfargo-secure-login.cc/verify
+https://chase-update-account.pw/login
+https://bankofamerica-secure.xyz/login/verify
+https://amazon-security-update.top/signin
+https://apple-id-verify.pw/signin
+https://microsoft-account-verify.cc/login
+https://paypal-update-billing.top/signin
+https://netflix-billing-update.pw/account
+https://steam-community-trade.cc/login
+https://coinbase-verify-wallet.top/signin
+https://binance-secure-verify.pw/auth

@@ -1,0 +1,12 @@
+# EasyPrivacy — Tracker domains
+# Source: https://easylist.to/
+track3r-analytics.net
+analytics-collector.cc
+pixel-tracker.net
+telemetry-host.com
+fingerprint-js.com
+session-recorder.net
+heatmap-tracker.cc
+ab-testing-platform.net
+user-profiling-cdn.com
+data-broker-host.cc

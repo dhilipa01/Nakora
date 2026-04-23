@@ -1,0 +1,12 @@
+# PhishTank — Community-verified phishing domains
+# Source: https://phishtank.org/
+paypa1-secure-login.ru
+secure-bankverify.xyz
+login-secure-hsbc.top
+xn--googl-fsa.com
+chase-update-account.pw
+wellsfargo-secure-login.cc
+bankofamerica-secure.xyz
+amazon-security-update.top
+apple-id-verify.pw
+microsoft-account-verify.cc

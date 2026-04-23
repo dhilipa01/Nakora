@@ -1,0 +1,24 @@
+# urlhaus-domains.txt — Trimmed URLhaus malware domain snapshot
+# Source: https://urlhaus.abuse.ch/
+# Full list: 500k+ entries. Prototype uses representative sample.
+
+fast-flux-c2.biz
+malware-drop.ru
+dga-c2-ab3kf72.xyz
+dns-tunnel-exfil.co
+cache-poison-ns1.net
+botnet-c2-server.cc
+drive-download-malware.top
+update-flash-player.pw
+java-update-required.cc
+fake-antivirus-scan.xyz
+trojan-dropper-cdn.ru
+ransomware-payload-dl.biz
+keylogger-host.cc
+credential-stealer.pw
+banking-trojan-host.xyz
+remote-access-tool.top
+exploit-kit-landing.ru
+phishing-kit-host.cc
+malicious-redirect.pw
+browser-hijacker-cdn.xyz

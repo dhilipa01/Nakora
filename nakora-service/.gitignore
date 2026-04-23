@@ -1,0 +1,7 @@
+bin/
+obj/
+*.user
+.vs/
+nakora.db
+logs/
+models/
