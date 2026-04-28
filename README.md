@@ -2,6 +2,12 @@
 
 **System-wide DNS Security Shield — on-device, privacy-first, CISA PDNS-inspired**
 
+The project at this stage is merely an experiment. I intend to convert javascript to react in order to better ensure effeciency and experiment.
+
+Use Gophish or any simulation tool to feed in data to the app for a form of testing if you will. 
+
+Claude was used to security test this very project to make sure it would function even in certain edge cases and yes little a compliance testing as well. 
+
 Prototype v0.1.0 | Electron + React | Zero Trust IPC | .NET 8 / WinUI 3 architecture target
 
 ---
@@ -85,27 +91,6 @@ nakora/
 └── electron-builder.yml               NSIS + portable targets, asar packing
 ```
 
----
-
-## What Is Real vs Simulated
-
-| Feature | Real | Notes |
-|---|---|---|
-| CPU usage | ✅ | `os.cpus()` delta per core |
-| Memory used/free | ✅ | `os.totalmem()` / `os.freemem()` |
-| Network connections | ✅ | `netstat -n` / `ss -nt` |
-| Top processes by CPU | ✅ | PowerShell `Get-Process` (Windows) / `ps` (Linux/macOS) |
-| Export JSON | ✅ | Real save dialog, real system/session/config data |
-| SQLite storage | ✅ | better-sqlite3, WAL mode, migrations |
-| API key storage | ✅ | keytar → Windows Credential Manager |
-| Filter list lookup | ✅ | In-memory Set per list file |
-| DNS query stream | ⚠️ | Simulated — no kernel DNS tap |
-| ETW kernel events | ⚠️ | Simulated — labelled in UI |
-| ML.NET inference | ⚠️ | Toggle present, ONNX not bundled |
-| PQC signing | ⚠️ | Toggle present, not cryptographically active |
-
----
-
 ## Bundled Filter Lists
 
 | List | Source | Entries (prototype) |
@@ -127,7 +112,7 @@ Production fetches all weekly. Prototype uses static bundled snapshots.
 - **GDPR** Art. 32 (minimisation), Art. 17 (erasure), Art. 20 (portability), Art. 25 (privacy by design)
 - **ISO 27001** — access controls, audit logging, incident detection architecture
 - **FIRST.org DNS Abuse Techniques Matrix** — DGA, tunneling, cache poisoning detection categories
-- **CISA PDNS** model — on-device equivalent of government Protective DNS
+- **CISA PDNS** model — on-device equivalent of US government Protective DNS
 
 ---
 
@@ -138,4 +123,3 @@ Production fetches all weekly. Prototype uses static bundled snapshots.
 | 1 (this prototype) | Architecture, UI, real OS metrics, SQLite, filter lists, export |
 | 2 | DNS interception (Windows DNS API), homoglyph, redirect chain, ML.NET ONNX |
 | 3 | DGA/tunneling detection, language irregularity NLP, MSIX packaging |
-| Stretch | PQC (BouncyCastle Dilithium3), Go microservice (abhizaik port), Microsoft Store |
