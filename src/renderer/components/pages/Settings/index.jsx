@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useTheme } from '../../../context/AppState.context.js';
+import { useTheme } from '../../../context/AppState.context.jsx';
 import { useSettings } from '../../../hooks/usePolling.js';
 import { AccordionSection, Toggle, Btn, Input, Tag, ConfirmButton } from '../../shared/primitives.jsx';
 import { THEMES } from '../../../theme.js';

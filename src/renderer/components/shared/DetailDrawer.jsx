@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppState } from '../../context/AppState.context.js';
+import { useAppState } from '../../context/AppState.context.jsx';
 import { SectionHeader, Tag, ScoreBadge, VerdictBadge, Btn, ProgressBar } from './primitives.jsx';
 import { verdictColor, scoreColor } from '../../theme.js';
 

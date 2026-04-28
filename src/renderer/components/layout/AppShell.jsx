@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useAppState } from '../../context/AppState.context.js';
-import { useTheme }    from '../../context/AppState.context.js';
+import { useAppState } from '../../context/AppState.context.jsx';
+import { useTheme }    from '../../context/AppState.context.jsx';
 import { StatusDot }   from '../shared/primitives.jsx';
 
 const NAV_ITEMS = [

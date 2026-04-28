@@ -8,7 +8,7 @@ namespace NakoraService.DNS;
 /// Local protective DNS resolver using DnsClient.NET.
 /// <30ms target: uses in-memory blocklist cache only; async analysis runs after returning.
 /// </summary>
-public sealed class LocalDnsResolver : IDnsResolver, IDisposable
+public sealed class LocalDnsResolver : IDnsResolver
 {
     private readonly LookupClient _client;
     private readonly ILogger<LocalDnsResolver> _logger;
@@ -61,6 +61,4 @@ public sealed class LocalDnsResolver : IDnsResolver, IDisposable
             return new DnsResolutionResult(domain, [], false, string.Empty, sw.ElapsedMilliseconds);
         }
     }
-
-    public void Dispose() => _client.Dispose();
 }

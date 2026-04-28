@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useAppState } from '../../../context/AppState.context.js';
+import { useAppState } from '../../../context/AppState.context.jsx';
 import { useDnsFeed } from '../../../hooks/usePolling.js';
 import { Card, ScoreBadge, VerdictBadge, Tag, FilterBar, ConfirmButton } from '../../shared/primitives.jsx';
 import { verdictColor, verdictBg } from '../../../theme.js';

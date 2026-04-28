@@ -19,11 +19,11 @@ const CSP = [
 
 const DEV_CSP = [
   "default-src 'none'",
-  "script-src 'self' 'unsafe-eval'",
-  "style-src 'self' 'unsafe-inline'",
-  "font-src 'self' data:",
+  "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' data: https://fonts.gstatic.com",
   "img-src 'self' data: blob:",
-  "connect-src 'self' ws://localhost:5173 http://localhost:5173",
+  "connect-src 'self' ws://localhost:5173 http://localhost:5173 https://fonts.googleapis.com https://fonts.gstatic.com",
   "object-src 'none'",
   "base-uri 'none'",
   "frame-ancestors 'none'",

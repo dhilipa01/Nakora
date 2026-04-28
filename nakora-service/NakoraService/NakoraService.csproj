@@ -45,9 +45,6 @@
 
     <!-- HTTP client for Go analyzer + feeds -->
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
-
-    <!-- RDAP (preferred over WHOIS per CLAUDE.md §7) -->
-    <PackageReference Include="Whois.NET" Version="4.0.0" />
   </ItemGroup>
 
 </Project>

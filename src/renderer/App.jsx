@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppStateProvider, ThemeProvider, useAppState, useTheme } from './context/AppState.context.js';
+import { AppStateProvider, ThemeProvider, useAppState, useTheme } from './context/AppState.context.jsx';
 import { AppShell } from './components/layout/AppShell.jsx';
 import DetailDrawer from './components/shared/DetailDrawer.jsx';
 

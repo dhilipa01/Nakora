@@ -3,7 +3,12 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react({
+      include: /\.(jsx?|tsx?)$/,
+      jsxImportSource: 'react',
+    }),
+  ],
   root: 'src/renderer',
   build: {
     outDir: path.resolve(__dirname, 'dist'),
@@ -17,15 +22,9 @@ export default defineConfig({
     strictPort: true,
   },
   base: './',
-  // Treat .js files in src/ as JSX — context/hook files use .js extension with JSX syntax
-  esbuild: {
-    loader: 'jsx',
-    include: /src\/.*\.js$/,
-    exclude: [],
-  },
   optimizeDeps: {
-    esbuildOptions: {
-      loader: { '.js': 'jsx' },
+    rolldownOptions: {
+      plugins: [],
     },
   },
 });
