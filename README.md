@@ -1,6 +1,6 @@
-# nakora
+# NAKORA
 
-**System-wide DNS Security Shield — on-device, privacy-first, CISA PDNS-inspired**
+**System-wide DNS Security Shield || On-Device, Privacy-First, CISA PDNS-inspired**
 
 The project at this stage is merely an experiment. I intend to convert javascript to react in order to better ensure effeciency and experiment.
 
