@@ -14,9 +14,9 @@ public sealed class FeedRefreshWorker : BackgroundService
     private static readonly TimeSpan RefreshInterval = TimeSpan.FromHours(12);
     private static readonly string[] SeedListPaths   =
     [
-        "lists/openphish.txt",
-        "lists/coinblocker.txt",
-        "lists/urlhaus.txt",
+        "data/filter-lists/openphish-feed.txt",
+        "data/filter-lists/coinblocker-domains.txt",
+        "data/filter-lists/urlhaus-domains.txt",
     ];
 
     private readonly BlocklistCache _cache;

@@ -47,4 +47,17 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
   </ItemGroup>
 
+  <!-- Seed filter lists — copied to output so FeedRefreshWorker can load them at runtime -->
+  <ItemGroup>
+    <Content Include="..\..\data\filter-lists\openphish-feed.txt"
+             CopyToOutputDirectory="PreserveNewest"
+             Link="data\filter-lists\openphish-feed.txt" />
+    <Content Include="..\..\data\filter-lists\coinblocker-domains.txt"
+             CopyToOutputDirectory="PreserveNewest"
+             Link="data\filter-lists\coinblocker-domains.txt" />
+    <Content Include="..\..\data\filter-lists\urlhaus-domains.txt"
+             CopyToOutputDirectory="PreserveNewest"
+             Link="data\filter-lists\urlhaus-domains.txt" />
+  </ItemGroup>
+
 </Project>
