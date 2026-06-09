@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"from graphify.watch import _rebuild_code; from pathlib import Path; _rebuild_code\\(Path\\('.'\\)\\)\")",
+      "Bash(npm run *)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(git add *)",
+      "Bash(dotnet build *)",
+      "Read(//usr/share/dotnet/**)",
+      "Read(//home/audoli/.dotnet/**)",
+      "Read(//opt/**)",
+      "Read(//home/audoli/.claude/plugins/cache/caveman/caveman/84cc3c14fa1e/skills/compress/**)",
+      "Bash(python3 -m scripts /home/audoli/Desktop/nakora-capstone/nakora/CLAUDE.md)"
+    ]
+  }
+}
