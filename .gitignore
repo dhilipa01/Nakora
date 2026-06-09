@@ -6,3 +6,6 @@ dist-electron/
 *.log
 out/
 release/
+.claude/
+CLAUDE.md
+CLAUDE.original.md
