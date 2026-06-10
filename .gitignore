@@ -9,3 +9,6 @@ release/
 .claude/
 CLAUDE.md
 CLAUDE.original.md
+last_set.txt
+graphify-out/
+primer_files/
