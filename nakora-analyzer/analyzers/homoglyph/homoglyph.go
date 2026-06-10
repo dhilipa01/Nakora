@@ -11,10 +11,14 @@ import (
 
 // confusable maps visually similar Unicode chars to their ASCII equivalents.
 var confusable = map[rune]rune{
+	// Cyrillic
 	'а': 'a', 'е': 'e', 'о': 'o', 'р': 'p', 'с': 'c', 'х': 'x',
+	'у': 'y', 'і': 'i', 'ѕ': 's', 'ј': 'j', 'ԁ': 'd', 'ԛ': 'q', 'һ': 'h',
+	// Greek
 	'ο': 'o', 'ρ': 'p', 'ν': 'v', 'μ': 'u', 'α': 'a', 'β': 'b',
-	'ı': 'i', 'ĺ': 'l', 'ļ': 'l', 'ľ': 'l', 'ĺ': 'l',
-	'0': '0', '1': '1', // digit lookalikes already ASCII — kept for completeness
+	'ι': 'i', 'κ': 'k', 'τ': 't',
+	// Latin extended
+	'ı': 'i', 'ĺ': 'l', 'ļ': 'l', 'ľ': 'l',
 }
 
 // highValueBrands targeted frequently by homoglyph phishing.
@@ -58,10 +62,12 @@ func (a *Analyzer) Analyze(_ context.Context, req analyzer.Request) (analyzer.Si
 	// Punycode xn-- prefix is a hard signal
 	isPunycode := strings.Contains(domain, "xn--")
 
-	// Check if mapped domain targets a known brand
+	// Check if mapped domain targets a known brand.
+	// Exclusion compares the ORIGINAL domain: a homoglyph spoof that maps to
+	// exactly "brand.com" is the strongest signal, not a legitimate domain.
 	brandMatch := ""
 	for _, brand := range highValueBrands {
-		if strings.Contains(asciiVersion, brand) && asciiVersion != brand+".com" {
+		if strings.Contains(asciiVersion, brand) && normalized != brand+".com" {
 			brandMatch = brand
 			break
 		}
