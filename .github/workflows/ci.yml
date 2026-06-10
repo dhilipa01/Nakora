@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  service:
+    name: C# service (build + test + dep audit)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # Solution defines x64 platform only — pass it explicitly or msbuild
+      # falls back to "Any CPU" and fails to resolve solution configs.
+      - name: Restore
+        run: dotnet restore nakora-service/NakoraService.sln
+
+      - name: Build
+        run: dotnet build nakora-service/NakoraService.sln --no-restore --configuration Release -p:Platform=x64
+
+      - name: Test
+        run: dotnet test nakora-service/NakoraService.Tests/NakoraService.Tests.csproj --configuration Release --verbosity normal
+
+      - name: Dependency vulnerability audit
+        shell: pwsh
+        run: |
+          $out = dotnet list nakora-service/NakoraService.sln package --vulnerable --include-transitive
+          Write-Output $out
+          if ($out -match 'has the following vulnerable packages') { exit 1 }
+
+  analyzer:
+    name: Go analyzer (vet + test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache-dependency-path: nakora-analyzer/go.sum
+
+      - name: Vet
+        working-directory: nakora-analyzer
+        run: go vet ./...
+
+      - name: Test
+        working-directory: nakora-analyzer
+        run: go test ./...
+
+      - name: Vulnerability check
+        working-directory: nakora-analyzer
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+          govulncheck ./...
+
+  # Phase 1.5 — uncomment when the Rust analyzer crate lands
+  # rust-analyzer:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: dtolnay/rust-toolchain@stable
+  #     - run: cargo fmt --check
+  #     - run: cargo clippy -- -D warnings
+  #     - run: cargo test
+  #     - uses: rustsec/audit-check@v2
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+
+  secrets:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
