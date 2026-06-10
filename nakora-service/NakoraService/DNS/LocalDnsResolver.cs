@@ -1,16 +1,29 @@
 using System.Diagnostics;
-using DnsClient;
+using System.Net;
+using ARSoft.Tools.Net;
+using ARSoft.Tools.Net.Dns;
 using Microsoft.Extensions.Logging;
 
 namespace NakoraService.DNS;
 
 /// <summary>
-/// Local protective DNS resolver using DnsClient.NET.
-/// <30ms target: uses in-memory blocklist cache only; async analysis runs after returning.
+/// Local protective DNS resolver using ARSoft.Tools.Net.
+/// &lt;30ms target: uses in-memory blocklist cache only; async analysis runs after returning.
 /// </summary>
 public sealed class LocalDnsResolver : IDnsResolver
 {
-    private readonly LookupClient _client;
+    // Same upstreams as DnsForwarder. Never use system-configured servers here:
+    // once DnsActivator points the system at 127.0.0.1, they resolve to ourselves.
+    private static readonly IPAddress[] Upstreams =
+    [
+        IPAddress.Parse("8.8.8.8"),
+        IPAddress.Parse("1.1.1.1"),
+        IPAddress.Parse("8.8.4.4"),
+    ];
+
+    private const int QueryTimeoutMs = 25;
+
+    private readonly DnsClient _client;
     private readonly ILogger<LocalDnsResolver> _logger;
     private readonly BlocklistCache _blocklist;
 
@@ -18,16 +31,7 @@ public sealed class LocalDnsResolver : IDnsResolver
     {
         _logger = logger;
         _blocklist = blocklist;
-
-        // Use system-configured upstream resolvers; configure short timeout for <30ms budget
-        var options = new LookupClientOptions
-        {
-            Timeout = TimeSpan.FromMilliseconds(25),
-            Retries = 1,
-            UseCache = true,
-            MinimumCacheTimeout = TimeSpan.FromSeconds(10),
-        };
-        _client = new LookupClient(options);
+        _client = new DnsClient(Upstreams, QueryTimeoutMs);
     }
 
     public async Task<DnsResolutionResult> ResolveAsync(string domain, CancellationToken ct = default)
@@ -43,11 +47,13 @@ public sealed class LocalDnsResolver : IDnsResolver
 
         try
         {
-            var result = await _client.QueryAsync(domain, QueryType.A, cancellationToken: ct);
-            var addresses = result.Answers
-                .ARecords()
+            var response = await _client.ResolveAsync(
+                DomainName.Parse(domain), RecordType.A, RecordClass.INet, token: ct);
+
+            var addresses = response?.AnswerRecords
+                .OfType<ARecord>()
                 .Select(r => r.Address.ToString())
-                .ToList();
+                .ToList() ?? [];
 
             sw.Stop();
             if (sw.ElapsedMilliseconds > 30)
@@ -55,9 +61,15 @@ public sealed class LocalDnsResolver : IDnsResolver
 
             return new DnsResolutionResult(domain, addresses, false, string.Empty, sw.ElapsedMilliseconds);
         }
-        catch (DnsResponseException ex)
+        catch (OperationCanceledException)
         {
-            _logger.LogDebug("DNS NXDOMAIN or error for {Domain}: {Msg}", domain, ex.Message);
+            return new DnsResolutionResult(domain, [], false, string.Empty, sw.ElapsedMilliseconds);
+        }
+        catch (Exception ex)
+        {
+            // Includes invalid names from DomainName.Parse and upstream timeouts.
+            // Resolver fails open: empty answer, never an unhandled fault.
+            _logger.LogDebug("DNS error for {Domain}: {Msg}", domain, ex.Message);
             return new DnsResolutionResult(domain, [], false, string.Empty, sw.ElapsedMilliseconds);
         }
     }

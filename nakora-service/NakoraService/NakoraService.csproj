@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- DNS resolution -->
-    <PackageReference Include="DnsClient" Version="1.8.0" />
+    <!-- DNS resolution (Apache 2.0) -->
+    <PackageReference Include="ARSoft.Tools.Net" Version="3.6.1" />
 
     <!-- ETW kernel event tracing (same library as Sysmon) -->
     <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="3.1.13" />
