@@ -7,7 +7,7 @@ I intend to convert plain javascript to react in some manners and Rust in Some N
 
 Use Gophish or any simulation tool to feed in data to the app for a form of testing if you will. 
 
-**Claude was used to security and compliance test** to make sure it would function even in certain edge cases and yes little a compliance testing as well. 
+**Claude was used to create Certain Modules and perform security and compliance testing**, in order to make sure it would function even under extreme malware loads test runs. 
 
 Prototype v0.1.0 | Electron + React | Zero Trust IPC | .NET 8 / WinUI 3 architecture target
 
