@@ -2,11 +2,12 @@
 
 **System-wide DNS Security Shield || On-Device, Privacy-First, CISA PDNS-inspired**
 
-The project at this stage is merely an experiment. I intend to convert javascript to react in order to better ensure effeciency and experiment.
+The project at this stage is merely an experiment. 
+I intend to convert plain javascript to react in some manners and Rust in Some Niche low level cases  in order to better ensure effeciency and flexibility.
 
 Use Gophish or any simulation tool to feed in data to the app for a form of testing if you will. 
 
-Claude was used to security test this very project to make sure it would function even in certain edge cases and yes little a compliance testing as well. 
+**Claude was used to security and compliance test** to make sure it would function even in certain edge cases and yes little a compliance testing as well. 
 
 Prototype v0.1.0 | Electron + React | Zero Trust IPC | .NET 8 / WinUI 3 architecture target
 
